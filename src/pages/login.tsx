@@ -1,7 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import cookies from "js-cookie";
+import { useNavigate } from "react-router";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const { isPending, mutate } = useMutation({
     mutationFn: async ({
       email,
@@ -22,7 +25,7 @@ export default function Login() {
       });
       const data = await response.json();
       if (response.ok) {
-        console.log("Login successful:", data);
+        navigate("/dashboard");
       } else {
         console.error("Login failed:", data);
       }
