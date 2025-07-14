@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
+import cookies from "js-cookie";
 
 export default function Login() {
   const { isPending, mutate } = useMutation({
@@ -11,8 +12,11 @@ export default function Login() {
     }) => {
       const response = await fetch("/api/login", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
+          Accept: "application/json",
+          "x-xsrf-token": cookies.get("XSRF-TOKEN") || "",
         },
         body: JSON.stringify({ email, password }),
       });
@@ -26,8 +30,11 @@ export default function Login() {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    await fetch("http://localhost:8000/sanctum/csrf-cookie", {
+      credentials: "include",
+    });
     const formData = new FormData(e.target as HTMLFormElement);
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;

@@ -9,6 +9,8 @@ import Register from "./pages/register.tsx";
 import App from "./App.tsx";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Dashboard from "./pages/dashboard.tsx";
+import DashboardLayout from "./layout/dashboard-layout.tsx";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +23,9 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/" element={<App />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+          </Route>
+          <Route element={<DashboardLayout />}>
+            <Route path="dashboard" element={<Dashboard />} />
           </Route>
         </Routes>
       </BrowserRouter>
