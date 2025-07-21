@@ -30,8 +30,6 @@ export default function DashboardLayout() {
 
   return (
     <div>
-      <h1>Dashboard</h1>
-      {data && <p>Welcome, {data.name}!</p>}
       <Outlet />
     </div>
   );
